@@ -1,0 +1,15 @@
+postgres:
+  image: postgres:9.6
+  ports:
+    - "5432:5432"
+  environment:
+    POSTGRES_USER: postgres
+    POSTGRES_DB: measure
+    POSTGRES_PASSWORD: foobar
+  cpu_shares: 100
+  mem_limit: 573741824
+  command: postgres -c log_statement=all
+  expose:
+      - "5432"
+  volumes:
+    - ./:/import_export

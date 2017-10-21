@@ -1,0 +1,44 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.4.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+plugins {
+	id "org.flywaydb.flyway" version "4.0.3"
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.flywaydb:flyway-core')
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('io.jsonwebtoken:jjwt:0.7.0')
+	compile 'com.fasterxml.jackson.core:jackson-databind:2.8.1'
+	compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.1'
+	compile group: 'org.modelmapper', name: 'modelmapper', version: '0.7.5'
+
+	runtime('org.postgresql:postgresql')
+	compileOnly('org.projectlombok:lombok')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile 'junit:junit:4.12'
+}

@@ -1,0 +1,76 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Java template
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+.idea/dataSources.local.xml
+.idea/dataSources/
+.idea/jwt-java-rest-backend.iml
+.idea/modules.xml
+.idea/workspace.xml
+
+.idea/dataSources.xml
+
+.idea/vcs.xml
+gradle/
+gradlew
+gradlew.bat
+.gradle/
+.idea/compiler.xml
+.idea/gradle.xml
+.idea/libraries/
+.idea/modules/
+jwt-java-rest-backend.iml
+
+
+.idea/uiDesigner.xml
+
+/build/
+/out
+
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/ui/dist
+/ui/tmp
+
+# dependencies
+/ui/node_modules
+/ui/bower_components
+
+# misc
+/ui/.sass-cache
+/ui/connect.lock
+/ui/coverage/*
+/ui/libpeerconnection.log
+npm-debug.log*
+yarn-error.log
+testem.log
+
+# ember-try
+.node_modules.ember-try/
+bower.json.ember-try
+package.json.ember-try
+
+
+.idea/misc.xml
