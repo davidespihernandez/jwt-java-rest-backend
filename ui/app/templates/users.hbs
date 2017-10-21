@@ -1,28 +1,23 @@
-<div class="jumbo">
-  <div class="right tomster"></div>
-  <h2>Welcome!</h2>
-  <p>
+<div class="ui container">
+  <<h2>
     Lista de usuarios
-  </p>
-  {{#link-to 'about' class="button"}}
-    About Us
-  {{/link-to}}
+  </h2>
+  <table class="ui celled padded table">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Email</th>
+    </tr></thead>
+    <tbody>
+  {{#each model as |user|}}
+    <tr>
+      <td>{{user.id}}</td>
+      <td>{{user.name}}</td>
+      <td>{{user.email}}</td>
+    </tr>
+  {{/each}}
+    </tbody>
+  </table>
 </div>
 
-<table class="ui celled padded table">
-  <thead>
-  <tr>
-    <th>Id</th>
-    <th>Nombre</th>
-    <th>Email</th>
-  </tr></thead>
-  <tbody>
-{{#each model as |user|}}
-  <tr>
-    <td>{{user.id}}</td>
-    <td>{{user.name}}</td>
-    <td>{{user.email}}</td>
-  </tr>
-{{/each}}
-  </tbody>
-</table>
