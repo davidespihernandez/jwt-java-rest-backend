@@ -5,6 +5,8 @@ create table "user"
     primary key,
   name text not null,
   email varchar(255) not null,
+  created_date TIMESTAMP WITH TIME ZONE,
+  modified_date  TIMESTAMP WITH TIME ZONE,
   user_info jsonb
 )
 ;

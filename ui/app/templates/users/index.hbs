@@ -1,0 +1,15 @@
+  <table class="ui celled padded table">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Email</th>
+    </tr></thead>
+    <tbody>
+      {{#each model as |user|}}
+        {{#user-item item=user}}
+        {{/user-item}}
+      {{/each}}
+    </tbody>
+  </table>
+{{outlet}}

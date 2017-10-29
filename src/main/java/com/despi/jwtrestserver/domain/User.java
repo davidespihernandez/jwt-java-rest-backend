@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "\"user\"")
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
-public class User {
+public class User extends StampedEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition = "serial")

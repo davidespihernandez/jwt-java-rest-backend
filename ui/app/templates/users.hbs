@@ -2,22 +2,6 @@
   <<h2>
     Lista de usuarios
   </h2>
-  <table class="ui celled padded table">
-    <thead>
-    <tr>
-      <th>Id</th>
-      <th>Nombre</th>
-      <th>Email</th>
-    </tr></thead>
-    <tbody>
-  {{#each model as |user|}}
-    <tr>
-      <td>{{user.id}}</td>
-      <td>{{user.name}}</td>
-      <td>{{user.email}}</td>
-    </tr>
-  {{/each}}
-    </tbody>
-  </table>
+  {{outlet}}
 </div>
 
