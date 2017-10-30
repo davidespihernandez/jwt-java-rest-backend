@@ -47,4 +47,5 @@ flyway {
 	url = 'jdbc:postgresql://localhost:5432/crazy'
 	user = 'postgres'
 	password = 'foobar'
+	schemas = ['crazy']
 }
