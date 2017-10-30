@@ -1,3 +1,19 @@
 <td>{{item.id}}</td>
 <td>{{item.name}}</td>
 <td>{{item.email}}</td>
+<div class="ui card">
+  <div class="content">
+    {{#link-to "users.show" item}}{{item.name}}{{/link-to}}
+    <div class="meta">
+      <span class="date">{{item.email}}</span>
+    </div>
+    <div class="description">
+      User description
+    </div>
+  </div>
+  <div class="extra content">
+    <a>
+      Extra content
+    </a>
+  </div>
+</div>
