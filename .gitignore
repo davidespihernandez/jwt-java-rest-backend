@@ -50,19 +50,6 @@ jwt-java-rest-backend.iml
 
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
-# compiled output
-/ui/dist
-/ui/tmp
-
-# dependencies
-/ui/node_modules
-/ui/bower_components
-
-# misc
-/ui/.sass-cache
-/ui/connect.lock
-/ui/coverage/*
-/ui/libpeerconnection.log
 npm-debug.log*
 yarn-error.log
 testem.log
