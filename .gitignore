@@ -61,3 +61,5 @@ package.json.ember-try
 
 
 .idea/misc.xml
+
+ui/ui-react/yarn.lock
