@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { List } from 'semantic-ui-react'
 
-// The FullRoster iterates over all of the players and creates
-// a link to their profile page.
+// The Users page iterates over all of the players and creates
+// a link to their user page.
 export default class UserList extends React.Component {
 
   constructor(props) {
@@ -19,17 +20,23 @@ export default class UserList extends React.Component {
   }
 
   render() {
-    return (    
+    return (
       <div>
-        <ul>
+        <h2>User list</h2>
+        <List divided relaxed>
           {
             this.state.users.map(u => (
-              <li key={u.id}>
-                <Link to={`/api/users/${u.id}`}>{u.name}</Link>
-              </li>
-            ))
+              <List.Item>
+                <List.Icon name='user' size='large' verticalAlign='middle' />
+                <List.Content>
+                  <List.Header as='a'><Link to={`/users/${u.id}`}>{u.name}</Link></List.Header>
+                  <List.Description as='a'>{u.email}</List.Description>
+                </List.Content>
+              </List.Item>
+              )
+            )
           }
-        </ul>
+        </List>
       </div>
     )
   }
