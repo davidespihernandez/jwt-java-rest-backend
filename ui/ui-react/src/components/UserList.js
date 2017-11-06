@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { List, Button, Divider } from 'semantic-ui-react'
+import history from '../history'
 
 // The Users page iterates over all of the players and creates
 // a link to their user page.
@@ -29,7 +30,7 @@ export default class UserList extends React.Component {
               <List.Item key={u.id}>
                 <List.Icon name='user' size='large' verticalAlign='middle' />
                 <List.Content>
-                  <List.Header as='a'><Link to={`/users/${u.id}`}>{u.name}</Link></List.Header>
+                  <List.Header><Link to={`/users/${u.id}`}>{u.name}</Link></List.Header>
                   <List.Description as='a'>{u.email}</List.Description>
                 </List.Content>
               </List.Item>
@@ -38,7 +39,7 @@ export default class UserList extends React.Component {
           }
         </List>
         <Divider />
-        <Link to={`/users/new`}><Button primary>New user</Button></Link>
+        <Button primary onClick={() => history.push('/users/new')}>New user</Button>
       </div>
     )
   }

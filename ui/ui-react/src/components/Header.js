@@ -1,6 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { Menu } from 'semantic-ui-react'
+import history from '../history'
 
 // The Header creates links that can be used to navigate
 // between routes.
@@ -13,6 +13,7 @@ export default class Header extends React.Component {
 
   handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name });
+    history.push('/' + name);
   }
   
   render(props) {
@@ -20,16 +21,13 @@ export default class Header extends React.Component {
 
     return (
         <Menu>
-          <Link to="/">
             <Menu.Item 
-              name="home"
-              active={activeItem === 'home'}
+              name=""
+              active={activeItem === ''}
               onClick={this.handleItemClick}
             >
             Home
             </Menu.Item>
-          </Link>
-          <Link to="/users">
             <Menu.Item
               name="users"
               active={activeItem === 'users'}
@@ -37,7 +35,6 @@ export default class Header extends React.Component {
             >
             Users
             </Menu.Item>
-          </Link>
       </Menu>
     )
   }

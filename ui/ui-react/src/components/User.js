@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Grid, Statistic, Card } from 'semantic-ui-react'
 
@@ -21,7 +20,6 @@ export default class User extends React.Component {
   }
   
   render() {
-    console.log("User info -> " + this.state.user.userInfo)
     return (
       <div>
         <h2>Perfil de usuario</h2>

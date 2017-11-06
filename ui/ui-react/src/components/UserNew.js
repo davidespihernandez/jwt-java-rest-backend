@@ -1,7 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Form, Input, TextArea } from 'semantic-ui-react'
+import history from '../history'
 
 export default class User extends React.Component {
   constructor(props) {
@@ -14,13 +14,11 @@ export default class User extends React.Component {
   }
 
   submitForm() {
-    console.log(this.state);
     let user = { name: this.state.name, email: this.state.email, userInfo: { mobile: this.state.mobile, fullAddress: this.state.fullAddress} };
      axios
        .post("http://localhost:8080/api/users", user)
        .then(res => {
-           console.log("Created user ");
-           console.log(user);
+           history.push('/users')
          }
        )
        .catch(err => console.log(err))
