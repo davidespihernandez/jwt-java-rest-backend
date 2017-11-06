@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { List } from 'semantic-ui-react'
+import { List, Button, Divider } from 'semantic-ui-react'
 
 // The Users page iterates over all of the players and creates
 // a link to their user page.
@@ -26,7 +26,7 @@ export default class UserList extends React.Component {
         <List divided relaxed>
           {
             this.state.users.map(u => (
-              <List.Item>
+              <List.Item key={u.id}>
                 <List.Icon name='user' size='large' verticalAlign='middle' />
                 <List.Content>
                   <List.Header as='a'><Link to={`/users/${u.id}`}>{u.name}</Link></List.Header>
@@ -37,6 +37,8 @@ export default class UserList extends React.Component {
             )
           }
         </List>
+        <Divider />
+        <Link to={`/users/new`}><Button primary>New user</Button></Link>
       </div>
     )
   }
