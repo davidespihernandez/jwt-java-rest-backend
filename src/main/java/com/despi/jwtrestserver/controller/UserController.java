@@ -1,9 +1,7 @@
 package com.despi.jwtrestserver.controller;
 
 import com.despi.jwtrestserver.domain.User;
-import com.despi.jwtrestserver.dto.Dto;
 import com.despi.jwtrestserver.dto.UserDto;
-import com.despi.jwtrestserver.mapper.JsonResponse;
 import com.despi.jwtrestserver.mapper.UserMapper;
 import com.despi.jwtrestserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,24 +29,18 @@ public class UserController {
 	}
 
 	@GetMapping("/{id}")
-	public Object getUser(@PathVariable Long id) {
-		User user = userService.getById(id);
-		//todo: add error when wrong id, error method in JsonResponse conforming the Ember RESTAdapter structure
-		return JsonResponse.toJsonMap(userMapper.convertToDto(user));
+	public UserDto getUser(@PathVariable Long id) {
+		return userService.getUserDetail(id);
 	}
 
 	@GetMapping
-	public Object getAllUsers() {
-		List<Dto> dtos =  userService.getAllUsers()
-				.stream()
-				.map(userMapper::convertToDto)
-				.collect(Collectors.toList());
-		return JsonResponse.toJsonMap(dtos);
+	public List<UserDto> getAllUsers() {
+		return userService.getAllUsersDetails();
 	}
 
 	@PostMapping
-	public Object createOrUpdateUser(@RequestBody UserDto userDto) {
+	public UserDto createOrUpdateUser(@RequestBody UserDto userDto) {
 		User user = userService.createOrUpdateUser(userDto);
-		return JsonResponse.toJsonMap(userMapper.convertToDto(user));
+		return userMapper.convertToDto(user);
 	}
 }

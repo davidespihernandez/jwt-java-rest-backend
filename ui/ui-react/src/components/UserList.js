@@ -16,7 +16,7 @@ export default class UserList extends React.Component {
   componentDidMount() {
     axios
       .get("http://localhost:8080/api/users")
-      .then(res => this.setState({ users: res.data.users }))
+      .then(res => this.setState({ users: res.data }))
       .catch(err => console.log(err))
   }
 

@@ -36,9 +36,9 @@ dependencies {
 	compile 'com.fasterxml.jackson.core:jackson-databind:2.8.1'
 	compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.1'
 	compile group: 'org.modelmapper', name: 'modelmapper', version: '0.7.5'
+	compile("org.springframework.boot:spring-boot-devtools")
 
 	runtime('org.postgresql:postgresql')
-	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile 'junit:junit:4.12'
 }

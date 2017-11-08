@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { Grid, Statistic, Card } from 'semantic-ui-react'
+import Page404 from './Page404'
 
 // The Player looks up the player using the number parsed from
 // the URL's pathname. If no player is found with the given
@@ -8,18 +9,26 @@ import { Grid, Statistic, Card } from 'semantic-ui-react'
 export default class User extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { user: { userInfo: {} }};
+    this.state = { user: { userInfo: {} }, error404: false};
     this.props = props;
   }
 
   componentDidMount() {
     axios
       .get(`http://localhost:8080/api/users/${this.props.match.params.id}`)
-      .then(res => this.setState({ user: res.data.users }))
-      .catch(err => console.log(err))
+      .then(res => this.setState({ user: res.data }))
+      .catch(err => {
+          if (err.response.status === 404) {
+            this.setState( { error404: true } )
+          }
+        }
+      )
   }
   
   render() {
+    if (this.state.error404) {
+      return <Page404 />
+    }
     return (
       <div>
         <h2>Perfil de usuario</h2>
