@@ -6,7 +6,7 @@ This project is a boilerplate/example which covers how to create an application 
 
 The main interesting points of this code are:
 
-##Backend
+## Backend
 - Spring boot REST app
 - Postgres as database
 - JPA/Hibernate as ORM, spring data repositories
@@ -15,11 +15,11 @@ The main interesting points of this code are:
 - Flyway as the database migration tool
 - Custom exception handling in controllers 
 
-##Frontend
+## Frontend
 - Reactjs
 - Semantic UI as the
 
-##To start the app
+## To start the app
 
 ### Start the database
 
@@ -32,14 +32,14 @@ docker-compose up
 You'll have to install previously [docker](https://www.docker.com/).
 This will start the postgres database. You'll need to create a database and schema called `crazy`for the API to work.
 
-###Start the API
+### Start the API
 From the project root folder type
 
 ```
 ./gradlew bootRun
 ```
 
-###Start the UI
+### Start the UI
 From the project root folder type
 
 ```
@@ -49,15 +49,15 @@ npm start
 
 You'll be able to use the application at `http://localhost:3000`
  
-##TODO list
+## TODO list
 
-###Features
+### Features
 - Form validation
 - Edit existing users
 - Add scores feature
 - Add some D3 charts for scores using react-d3
 
-###Architecture
+### Architecture
 - REST end-points automatic testing using MockMVC
 - Add spring security with JWT tokens. Config is done, need to do the login page, and manage the tokens in the UI and the API.
 - Use PropTypes in the UI
