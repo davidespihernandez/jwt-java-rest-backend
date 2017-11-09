@@ -23,7 +23,7 @@ export default class UserList extends React.Component {
   render() {
     return (
       <div>
-        <h2>User list</h2>
+        <h2>Lista de usuarios</h2>
         <List divided relaxed>
           {
             this.state.users.map(u => (
