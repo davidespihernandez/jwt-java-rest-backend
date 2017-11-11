@@ -61,7 +61,11 @@ public class UserService {
 		user.setName(userDto.getName());
 		user.setEmail(userDto.getEmail());
 		user.setUserInfo(userDto.getUserInfo());
-		userRepository.save(user);
+		try {
+			userRepository.save(user);
+		} catch (Exception e) {
+			throw new ApplicationException("Error saving used: " + e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+		}
 		return user;
 	}
 }

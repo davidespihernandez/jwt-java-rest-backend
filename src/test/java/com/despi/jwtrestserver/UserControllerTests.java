@@ -28,6 +28,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
+
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -49,32 +51,14 @@ public class UserControllerTests {
 
 	private MockMvc mockMvc;
 
-	private HttpMessageConverter mappingJackson2HttpMessageConverter;
-
-	private List<User> userList = new ArrayList<>();
-
 	@Autowired
 	private WebApplicationContext webApplicationContext;
 
 	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
 	UserFactory userFactory;
 
-	@Autowired
-	void setConverters(HttpMessageConverter<?>[] converters) {
-
-		this.mappingJackson2HttpMessageConverter = Arrays.asList(converters).stream()
-				.filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter)
-				.findAny()
-				.orElse(null);
-
-		assertThat(this.mappingJackson2HttpMessageConverter).isNotNull();
-	}
-
 	@Before
-	public void setup() throws Exception {
+	public void setup() {
 		this.mockMvc = webAppContextSetup(webApplicationContext).build();
 	}
 
@@ -104,7 +88,44 @@ public class UserControllerTests {
 		assertThat(userDto.getEmail()).isEqualTo(returned.getEmail());
 	}
 
-	//TODO: test update existing
-	//TODO: test duplicate name (exception thrown)
-	//TODO: test empty name (exception thrown)
+	@Test
+	public void updateUser() throws Exception {
+		User user = userFactory.create();
+		UserDto userDto = UserFactory.createDto(user);
+		String newName = "New " + UUID.randomUUID().toString();
+		userDto.setName(newName);
+		MvcResult mvcResult = mockMvc.perform(post(API)
+				.content(mapper.writeValueAsString(userDto))
+				.contentType(contentType))
+				.andExpect(status().isOk())
+				.andReturn();
+		UserDto returned = mapper.readValue(mvcResult.getResponse().getContentAsString(), UserDto.class);
+		assertThat(returned.getId()).isEqualTo(user.getId());
+		assertThat(userDto.getName()).isEqualTo(returned.getName());
+		assertThat(userDto.getEmail()).isEqualTo(returned.getEmail());
+	}
+
+	@Test
+	public void nameMustBeNotNullOrEmpty() throws Exception {
+		UserDto userDto = UserFactory.createDto();
+		userDto.setName("");
+		mockMvc.perform(post(API)
+				.content(mapper.writeValueAsString(userDto))
+				.contentType(contentType))
+				.andExpect(status().isNotAcceptable());
+	}
+
+	@Test
+	public void duplicateEmailFails() throws Exception {
+		UserDto userDto = UserFactory.createDto();
+		mockMvc.perform(post(API)
+				.content(mapper.writeValueAsString(userDto))
+				.contentType(contentType))
+				.andExpect(status().isOk());
+		//a second call will fail as the email is repeated
+		mockMvc.perform(post(API)
+				.content(mapper.writeValueAsString(userDto))
+				.contentType(contentType))
+				.andExpect(status().isNotAcceptable());
+	}
 }
