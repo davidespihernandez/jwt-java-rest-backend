@@ -2,9 +2,12 @@ package com.despi.jwtrestserver.factory;
 
 import com.despi.jwtrestserver.domain.User;
 import com.despi.jwtrestserver.domain.UserInfo;
+import com.despi.jwtrestserver.dto.UserDto;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Component
 public class UserFactory extends EntityFactory<User> {
 
 	@Override
@@ -40,5 +43,13 @@ public class UserFactory extends EntityFactory<User> {
 			u.setUserInfo(userInfo);
 		});
 		return user;
+	}
+
+	public static UserDto createDto() {
+		UserDto userDto = new UserDto();
+		userDto.setName(UUID.randomUUID().toString());
+		userDto.setEmail(UUID.randomUUID().toString());
+		userDto.setUserInfo(new UserInfo());
+		return userDto;
 	}
 }

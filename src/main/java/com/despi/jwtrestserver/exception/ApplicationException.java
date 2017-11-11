@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 
 public class ApplicationException extends RuntimeException {
 
-	private HttpStatus httpStatus;
+	private HttpStatus httpStatus = HttpStatus.NOT_ACCEPTABLE;
 
 	public ApplicationException(String message) {
 		super(message);

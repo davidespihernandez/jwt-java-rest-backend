@@ -14,6 +14,7 @@ The main interesting points of this code are:
 - REST controllers, using JSON
 - Flyway as the database migration tool
 - Custom exception handling in controllers 
+- Automatic tests for services and controllers (MVC)
 
 ##Frontend
 - Reactjs
@@ -58,7 +59,6 @@ You'll be able to use the application at `http://localhost:3000`
 - Add some D3 charts for scores using react-d3
 
 ###Architecture
-- REST end-points automatic testing using MockMVC
 - Add spring security with JWT tokens. Config is done, need to do the login page, and manage the tokens in the UI and the API.
 - Use PropTypes in the UI
 - Create database and schema automatically if not existing

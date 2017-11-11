@@ -52,8 +52,12 @@ public class UserService {
 		if (isNew) {
 			user = new User();
 		} else {
-			user = userRepository.getOne(userDto.getId());
+			user = userRepository.findOne(userDto.getId());
+			if (user == null) {
+				throw ApplicationException.entityNotFound(userDto.getId());
+			}
 		}
+		userDto.assertIsValid();
 		user.setName(userDto.getName());
 		user.setEmail(userDto.getEmail());
 		user.setUserInfo(userDto.getUserInfo());
