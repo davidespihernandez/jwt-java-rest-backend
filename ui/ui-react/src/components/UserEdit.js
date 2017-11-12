@@ -3,10 +3,27 @@ import axios from 'axios'
 import { Form, Input, TextArea, Message } from 'semantic-ui-react'
 import history from '../history'
 
-export default class UserNew extends React.Component {
+export default class UserEdit extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', email: '', mobile: '', fullAddress: '', error: null }
+    this.state = { id: null, name: '', email: '', mobile: '', fullAddress: '', error: null }
+  }
+
+  componentDidMount() {
+    axios
+      .get(`http://localhost:8080/api/users/${this.props.match.params.id}`)
+      .then(res => {
+        this.setState({ ...res.data,  error404: false });
+        this.setState({ mobile: res.data.userInfo.mobile, fullAddress: res.data.userInfo.fullAddress })
+        console.log("After reading");
+        console.log(this.state);
+      })
+      .catch(err => {
+          if (err.response.status === 404) {
+            history.push('./Page404')
+          }
+        }
+      )
   }
 
   handleChange = (e, { name, value }) => {
@@ -14,9 +31,15 @@ export default class UserNew extends React.Component {
   }
 
   submitForm() {
-    let user = { name: this.state.name, email: this.state.email, userInfo: { mobile: this.state.mobile, fullAddress: this.state.fullAddress} };
+    let user = { id: this.state.id, 
+      name: this.state.name, 
+      email: this.state.email, 
+      userInfo: { mobile: this.state.mobile, fullAddress: this.state.fullAddress} 
+    };
+
     this.setState({ error: null });
-     axios
+
+    axios
        .post("http://localhost:8080/api/users", user)
        .then(res => {
            history.push('/users')
@@ -29,17 +52,15 @@ export default class UserNew extends React.Component {
 
   render() {
     const { name, email, mobile, fullAddress } = this.state
-    
-    console.log(this.state.error)
     return (
       <div>
-        <h2>Nuevo usuario</h2>
+        <h2>Editar {this.state.name}</h2>
         <Form onSubmit={this.submitForm.bind(this)}>
           <Form.Field name='name' value={name} control={Input} label='Nombre' placeholder='Nombre' onChange={this.handleChange} />
           <Form.Field name='email' value={email} control={Input} label='Email' placeholder='Email' onChange={this.handleChange} />
           <Form.Field name='mobile' value={mobile} control={Input} label='Móvil' placeholder='Móvil' onChange={this.handleChange} />
           <Form.Field name='fullAddress' value={fullAddress} control={TextArea} label='Dirección' placeholder='Dirección' onChange={this.handleChange} />
-          <Form.Button>Crear</Form.Button>
+          <Form.Button>Actualizar</Form.Button>
         </Form>
         {
           this.state.error !== null &&

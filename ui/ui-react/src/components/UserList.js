@@ -24,21 +24,23 @@ export default class UserList extends React.Component {
     return (
       <div>
         <h2>Lista de usuarios</h2>
-        <List divided relaxed>
+        <List divided verticalAlign='middle'>
           {
             this.state.users.map(u => (
               <List.Item key={u.id}>
+                <List.Content floated='right'>
+                  <Button content='Editar' icon='edit' onClick={() => history.push(`/users/${u.id}/edit`)} />
+                </List.Content>
                 <List.Icon name='user' size='large' verticalAlign='middle' />
                 <List.Content>
                   <List.Header><Link to={`/users/${u.id}`}>{u.name}</Link></List.Header>
-                  <List.Description as='a'>{u.email}</List.Description>
+                  <List.Content>{u.email}</List.Content>
                 </List.Content>
               </List.Item>
               )
             )
           }
         </List>
-        <Divider />
         <Button primary onClick={() => history.push('/users/new')}>New user</Button>
       </div>
     )
