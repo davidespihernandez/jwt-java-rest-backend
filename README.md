@@ -54,7 +54,6 @@ You'll be able to use the application at `http://localhost:3000`
 
 ### Features
 - Form validation
-- Edit existing users
 - Add scores feature
 - Add some D3 charts for scores using react-d3
 
