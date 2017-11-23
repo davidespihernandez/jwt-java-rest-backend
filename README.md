@@ -2,15 +2,17 @@
 This project is a boilerplate/example which covers how to create an application using the next technologies.
 
 - REST API using Spring Boot for the backend
+- JWT tokens for security (based on Stephan Zerhusen code, https://github.com/szerhusenBC/jwt-spring-security-demo, but adapted)
 - Reactjs for the front end using semantic ui and axios
 
 The main interesting points of this code are:
 
 ## Backend
 - Spring boot REST app
+- JWT tokens with Spring Security
 - Postgres as database
 - JPA/Hibernate as ORM, spring data repositories
-- Jsonb fields in entities
+- JSONB fields in entities
 - REST controllers, using JSON
 - Flyway as the database migration tool
 - Custom exception handling in controllers 
@@ -18,7 +20,7 @@ The main interesting points of this code are:
 
 ## Frontend
 - Reactjs
-- Semantic UI as the
+- Semantic UI as the UI library
 
 ## To start the app
 
@@ -58,6 +60,5 @@ You'll be able to use the application at `http://localhost:3000`
 - Add some D3 charts for scores using react-d3
 
 ### Architecture
-- Add spring security with JWT tokens. Config is done, need to do the login page, and manage the tokens in the UI and the API.
 - Use PropTypes in the UI
 - Create database and schema automatically if not existing

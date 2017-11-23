@@ -18,16 +18,9 @@ public class UserMapper {
 		this.modelMapper = modelMapper;
 	}
 
-	public static HashMap<String, Object> toDetail(User user) {
-		HashMap<String, Object> map = new HashMap<>();
-		map.put("id", user.getId());
-		map.put("name", user.getName());
-		map.put("email", user.getEmail());
-		return map;
-	}
-
 	public UserDto convertToDto(User user) {
 		UserDto userDto = modelMapper.map(user, UserDto.class);
+		userDto.setPassword(null);
 		return userDto;
 	}
 }

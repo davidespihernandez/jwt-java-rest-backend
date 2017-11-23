@@ -20,6 +20,8 @@ public class UserFactory extends EntityFactory<User> {
 		create(user, u -> {
 			u.setName(UUID.randomUUID().toString());
 			u.setEmail(UUID.randomUUID().toString() + "@gmail.com");
+			u.setPassword("password");
+			u.setLastPasswordResetDate(null);
 			u.setUserInfo(new UserInfo());
 		});
 		return user;
@@ -30,6 +32,8 @@ public class UserFactory extends EntityFactory<User> {
 		create(user, u -> {
 			u.setName(name);
 			u.setEmail(email);
+			u.setPassword("password");
+			u.setLastPasswordResetDate(null);
 			u.setUserInfo(new UserInfo());
 		});
 		return user;
@@ -40,6 +44,8 @@ public class UserFactory extends EntityFactory<User> {
 		create(user, u -> {
 			u.setName(name);
 			u.setEmail(email);
+			u.setPassword("password");
+			u.setLastPasswordResetDate(null);
 			u.setUserInfo(userInfo);
 		});
 		return user;
@@ -49,6 +55,7 @@ public class UserFactory extends EntityFactory<User> {
 		UserDto userDto = new UserDto();
 		userDto.setName(UUID.randomUUID().toString());
 		userDto.setEmail(UUID.randomUUID().toString() + "@gmail.com");
+		userDto.setPassword("password");
 		userDto.setUserInfo(new UserInfo());
 		return userDto;
 	}

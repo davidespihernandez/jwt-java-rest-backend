@@ -27,6 +27,9 @@ public class UserInfo {
 	public UserInfo() {
 	}
 
+	private String firstName;
+	private String lastName;
+
 	private String fullAddress;
 
 	private String timezone;
@@ -85,25 +88,47 @@ public class UserInfo {
 		this.fullAddress = fullAddress;
 	}
 
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof UserInfo)) return false;
 
-		UserInfo that = (UserInfo) o;
+		UserInfo userInfo = (UserInfo) o;
 
-		if (getFullAddress() != null ? !getFullAddress().equals(that.getFullAddress()) : that.getFullAddress() != null)
+		if (getFirstName() != null ? !getFirstName().equals(userInfo.getFirstName()) : userInfo.getFirstName() != null)
 			return false;
-		if (getTimezone() != null ? !getTimezone().equals(that.getTimezone()) : that.getTimezone() != null)
+		if (getLastName() != null ? !getLastName().equals(userInfo.getLastName()) : userInfo.getLastName() != null)
 			return false;
-		if (getTitle() != that.getTitle()) return false;
-		if (getPhone() != null ? !getPhone().equals(that.getPhone()) : that.getPhone() != null) return false;
-		return getMobile() != null ? getMobile().equals(that.getMobile()) : that.getMobile() == null;
+		if (getFullAddress() != null ? !getFullAddress().equals(userInfo.getFullAddress()) : userInfo.getFullAddress() != null)
+			return false;
+		if (getTimezone() != null ? !getTimezone().equals(userInfo.getTimezone()) : userInfo.getTimezone() != null)
+			return false;
+		if (getTitle() != userInfo.getTitle()) return false;
+		if (getPhone() != null ? !getPhone().equals(userInfo.getPhone()) : userInfo.getPhone() != null) return false;
+		return getMobile() != null ? getMobile().equals(userInfo.getMobile()) : userInfo.getMobile() == null;
 	}
 
 	@Override
 	public int hashCode() {
-		int result = getFullAddress() != null ? getFullAddress().hashCode() : 0;
+		int result = getFirstName() != null ? getFirstName().hashCode() : 0;
+		result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
+		result = 31 * result + (getFullAddress() != null ? getFullAddress().hashCode() : 0);
 		result = 31 * result + (getTimezone() != null ? getTimezone().hashCode() : 0);
 		result = 31 * result + (getTitle() != null ? getTitle().hashCode() : 0);
 		result = 31 * result + (getPhone() != null ? getPhone().hashCode() : 0);
@@ -114,7 +139,9 @@ public class UserInfo {
 	@Override
 	public String toString() {
 		return "UserInfo{" +
-				"fullAddress='" + fullAddress + '\'' +
+				"firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", fullAddress='" + fullAddress + '\'' +
 				", timezone='" + timezone + '\'' +
 				", title=" + title +
 				", phone='" + phone + '\'' +

@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserDto implements Dto{
-	Long id;
-	String name;
-	String email;
-	UserInfo userInfo;
+public class UserDto implements Dto {
+	private Long id;
+	private String name;
+	private String password;
+	private String email;
+	private UserInfo userInfo;
 
 	public Long getId() {
 		return id;
@@ -36,6 +37,14 @@ public class UserDto implements Dto{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public UserInfo getUserInfo() {
@@ -75,6 +84,9 @@ public class UserDto implements Dto{
 		}
 		if (StringUtils.isEmpty(email)) {
 			errors.add("Email is empty");
+		}
+		if (id == null && StringUtils.isEmpty(password)) {
+			errors.add("Password required");
 		}
 		return errors;
 	}
