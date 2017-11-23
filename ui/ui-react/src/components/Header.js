@@ -20,7 +20,7 @@ export default class Header extends React.Component {
     const { activeItem } = this.state
 
     return (
-        <Menu>
+        <Menu secondary>
             <Menu.Item 
               name=""
               active={activeItem === ''}
@@ -35,6 +35,9 @@ export default class Header extends React.Component {
             >
             Users
             </Menu.Item>
+            <Menu.Menu position='right'>
+              <Menu.Item name='login' active={activeItem === 'login'} onClick={this.handleItemClick} />
+          </Menu.Menu>
       </Menu>
     )
   }
