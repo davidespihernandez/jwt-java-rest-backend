@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { Form, Input, Message } from 'semantic-ui-react'
+import { Header, Segment, Grid, Form, Input, Message } from 'semantic-ui-react'
 import history from '../history'
 
 export default class Login extends React.Component {
@@ -33,22 +33,28 @@ export default class Login extends React.Component {
   render() {
     const { username, password } = this.state
     return (
-      <div>
-        <h2>Login</h2>
-        <Form onSubmit={this.submitForm.bind(this)}>
-          <Form.Field name='username' value={username} control={Input} label='Email' placeholder='Email' onChange={this.handleChange} />
-          <Form.Field name='password' value={password} control={Input} type='password' label='Password' placeholder='Password' onChange={this.handleChange} />
-          <Form.Button>Login</Form.Button>
-        </Form>
-        {
-          this.state.error !== null &&
-          <Message
-            error
-            header='Error in login'
-            content={this.state.error}
-          />
-        }
-      </div>
+      <Grid container centered columns={1} verticalAlign='middle' padded>
+        <Grid.Column width={6}>
+          <Header as='h2' block textAlign='center'>
+          Login to your account
+          </Header>
+          <Segment secondary>
+            <Form onSubmit={this.submitForm.bind(this)}>
+              <Form.Field name='username' icon='mail' iconPosition='left' value={username} control={Input} label='Email' placeholder='Email' onChange={this.handleChange} />
+              <Form.Field name='password' icon='lock' iconPosition='left' value={password} control={Input} type='password' label='Password' placeholder='Password' onChange={this.handleChange} />
+              <Form.Button primary fluid large>Login</Form.Button>
+            </Form>
+          </Segment>
+          {
+            this.state.error !== null &&
+            <Message
+              error
+              header='Error in login'
+              content={this.state.error}
+            />
+          }
+        </Grid.Column>
+      </Grid>
     )
   }
 }
