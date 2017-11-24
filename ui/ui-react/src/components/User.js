@@ -1,12 +1,10 @@
 import React from 'react'
-import axios from 'axios'
 import { Grid, Statistic, Card } from 'semantic-ui-react'
+import SecuredComponent from './SecuredComponent'
 import Page404 from './Page404'
+import * as Api from '../Api'
 
-// The Player looks up the player using the number parsed from
-// the URL's pathname. If no player is found with the given
-// number, then a "player not found" message is displayed.
-export default class User extends React.Component {
+export default class User extends SecuredComponent {
   constructor(props) {
     super(props);
     this.state = { user: { userInfo: {} }, error404: false};
@@ -14,8 +12,7 @@ export default class User extends React.Component {
   }
 
   componentDidMount() {
-    axios
-      .get(`http://localhost:8080/api/users/${this.props.match.params.id}`)
+    Api.get(`/users/${this.props.match.params.id}`)
       .then(res => this.setState({ user: res.data }))
       .catch(err => {
           if (err.response.status === 404) {

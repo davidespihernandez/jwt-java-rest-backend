@@ -6,6 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -46,6 +47,9 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 	private Claims getAllClaimsFromToken(String token) {
+		if (StringUtils.isEmpty(token)) {
+			return null;
+		}
 		return Jwts.parser()
 				.setSigningKey(secret)
 				.parseClaimsJws(token)
@@ -78,6 +82,12 @@ public class JwtTokenUtil implements Serializable {
 
 	public String generateToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
+		if (userDetails instanceof JwtUser) {
+			claims.put("userId", ((JwtUser) userDetails).getId());
+			claims.put("userName", userDetails.getUsername());
+			claims.put("name", ((JwtUser) userDetails).getName());
+			claims.put("authorities", ((JwtUser) userDetails).getAuthorities());
+		}
 		return doGenerateToken(claims, userDetails.getUsername());
 	}
 
@@ -102,6 +112,9 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 	public Boolean validateToken(String token, UserDetails userDetails) {
+		if (StringUtils.isEmpty(token)) {
+			return false;
+		}
 		JwtUser user = (JwtUser) userDetails;
 		final String username = getUsernameFromToken(token);
 		final Date created = getIssuedAtDateFromToken(token);

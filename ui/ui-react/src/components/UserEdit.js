@@ -1,22 +1,20 @@
 import React from 'react'
-import axios from 'axios'
 import { Form, Input, TextArea, Message } from 'semantic-ui-react'
+import SecuredComponent from './SecuredComponent'
 import history from '../history'
+import * as Api from '../Api'
 
-export default class UserEdit extends React.Component {
+export default class UserEdit extends SecuredComponent {
   constructor(props) {
     super(props);
     this.state = { id: null, name: '', email: '', mobile: '', fullAddress: '', error: null }
   }
 
   componentDidMount() {
-    axios
-      .get(`http://localhost:8080/api/users/${this.props.match.params.id}`)
+    Api.get(`/users/${this.props.match.params.id}`)
       .then(res => {
-        this.setState({ ...res.data,  error404: false });
+        this.setState({ ...res.data,  error: false });
         this.setState({ mobile: res.data.userInfo.mobile, fullAddress: res.data.userInfo.fullAddress })
-        console.log("After reading");
-        console.log(this.state);
       })
       .catch(err => {
           if (err.response.status === 404) {
@@ -39,8 +37,7 @@ export default class UserEdit extends React.Component {
 
     this.setState({ error: null });
 
-    axios
-       .post("http://localhost:8080/api/users", user)
+    Api.post("/users", user)
        .then(res => {
            history.push('/users')
          }

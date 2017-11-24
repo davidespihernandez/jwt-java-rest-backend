@@ -2,6 +2,8 @@ import React from 'react'
 import axios from 'axios'
 import { Header, Segment, Grid, Form, Input, Message } from 'semantic-ui-react'
 import history from '../history'
+import * as Security from '../Security'
+import * as Api from '../Api'
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -17,11 +19,9 @@ export default class Login extends React.Component {
     let credentials = { username: this.state.username, password: this.state.password};
     this.setState({ error: null });
      axios
-       .post("http://localhost:8080/auth", credentials)
+       .post(Api.BASE_URLS().api + "/auth", credentials)
        .then(res => {
-            console.log("Logged");
-            console.log(res);
-            localStorage.setItem("JWT_TOKEN", res.data.token);
+            Security.login(res.data.token);
             history.push('/');
         }
       )

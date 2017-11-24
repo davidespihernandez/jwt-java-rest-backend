@@ -27,6 +27,7 @@ public class UserServiceTests {
 		String randomString = UUID.randomUUID().toString();
 		userDto.setEmail(randomString);
 		userDto.setName(randomString);
+		userDto.setPassword(randomString);
 		UserInfo userInfo = new UserInfo();
 		userInfo.setFullAddress("Address");
 		userInfo.setTitle(UserInfo.TITLE.MR);

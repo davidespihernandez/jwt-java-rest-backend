@@ -17,6 +17,7 @@ public final class JwtUserFactory {
         return new JwtUser(
                 user.getId(),
                 user.getEmail(),
+                user.getName(),
                 user.getUserInfo().getFirstName(),
                 user.getUserInfo().getLastName(),
                 user.getEmail(),

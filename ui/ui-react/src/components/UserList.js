@@ -1,12 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
-import { List, Button, Divider } from 'semantic-ui-react'
+import { List, Button } from 'semantic-ui-react'
+import SecuredComponent from './SecuredComponent'
 import history from '../history'
+import * as Api from '../Api'
 
 // The Users page iterates over all of the players and creates
 // a link to their user page.
-export default class UserList extends React.Component {
+export default class UserList extends SecuredComponent {
 
   constructor(props) {
     super(props);
@@ -14,8 +15,7 @@ export default class UserList extends React.Component {
   }
 
   componentDidMount() {
-    axios
-      .get("http://localhost:8080/api/users")
+    Api.get('/users')
       .then(res => this.setState({ users: res.data }))
       .catch(err => console.log(err))
   }
@@ -41,7 +41,7 @@ export default class UserList extends React.Component {
             )
           }
         </List>
-        <Button primary onClick={() => history.push('/users/new')}>New user</Button>
+        <Button primary onClick={() => history.push('/users/new')}>Nuevo</Button>
       </div>
     )
   }

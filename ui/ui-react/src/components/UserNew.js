@@ -1,9 +1,10 @@
 import React from 'react'
-import axios from 'axios'
 import { Form, Input, TextArea, Message } from 'semantic-ui-react'
+import SecuredComponent from './SecuredComponent'
 import history from '../history'
+import * as Api from '../Api'
 
-export default class UserNew extends React.Component {
+export default class UserNew extends SecuredComponent {
   constructor(props) {
     super(props);
     this.state = { name: '', email: '', mobile: '', fullAddress: '', error: null }
@@ -16,14 +17,13 @@ export default class UserNew extends React.Component {
   submitForm() {
     let user = { name: this.state.name, email: this.state.email, userInfo: { mobile: this.state.mobile, fullAddress: this.state.fullAddress} };
     this.setState({ error: null });
-     axios
-       .post("http://localhost:8080/api/users", user)
+     Api.post("/users", user)
        .then(res => {
            history.push('/users')
          }
        )
        .catch(err => {
-          this.setState({ error: err.response.data.message });
+          this.setState({ error: err.response.data.error });
        })
   }
 

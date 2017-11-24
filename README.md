@@ -21,6 +21,7 @@ The main interesting points of this code are:
 ## Frontend
 - Reactjs
 - Semantic UI as the UI library
+- Axios to manage REST API calls
 
 ## To start the app
 
@@ -33,7 +34,7 @@ docker-compose up
 ```
 
 You'll have to install previously [docker](https://www.docker.com/).
-This will start the postgres database. You'll need to create a database and schema called `crazy`for the API to work.
+This will start the postgres database. You'll need to create a database and schema called `crazy` for the API to work.
 
 ### Start the API
 From the project root folder type

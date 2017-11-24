@@ -56,10 +56,11 @@ public class UserService {
 	@Transactional
 	public User createOrUpdateUser(UserDto userDto) {
 		boolean isNew = userDto.getId() == null;
-		userDto.assertIsValid();
 		User user;
 		if (isNew) {
 			user = new User();
+			//for simplicity, use the name as password initially
+			userDto.setPassword(userDto.getName());
 			user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		} else {
 			user = userRepository.findOne(userDto.getId());
@@ -67,6 +68,7 @@ public class UserService {
 				throw ApplicationException.entityNotFound(userDto.getId());
 			}
 		}
+		userDto.assertIsValid();
 		user.setName(userDto.getName());
 		user.setEmail(userDto.getEmail());
 		user.setUserInfo(userDto.getUserInfo());
