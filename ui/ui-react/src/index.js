@@ -6,10 +6,17 @@ import App from './App';
 import { Router } from 'react-router-dom'
 import registerServiceWorker from './registerServiceWorker';
 import history from './history'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import crazyApp from './reducers'
+
+let store = createStore(crazyApp)
 
 ReactDOM.render((
-    <Router history={history}>
-        <App />
-</Router>
+    <Provider store={store}>
+        <Router history={history}>
+            <App />
+        </Router>
+    </Provider>
 ), document.getElementById('root'));
 registerServiceWorker();
