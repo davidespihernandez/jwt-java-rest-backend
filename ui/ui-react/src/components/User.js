@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Statistic, Card } from 'semantic-ui-react'
 import SecuredComponent from './SecuredComponent'
 import Page404 from './Page404'
-import * as Api from '../Api'
+import { userService } from '../services'
 
 export default class User extends SecuredComponent {
   constructor(props) {
@@ -12,7 +12,7 @@ export default class User extends SecuredComponent {
   }
 
   componentDidMount() {
-    Api.get(`/users/${this.props.match.params.id}`)
+    userService.getById(this.props.match.params.id)
       .then(res => this.setState({ user: res.data }))
       .catch(err => {
           if (err.response.status === 404) {

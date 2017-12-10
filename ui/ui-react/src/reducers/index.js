@@ -1,8 +1,12 @@
 import { combineReducers } from 'redux'
-import header from './header'
+import { authentication } from './authentication.reducer';
+import { alert } from './alert.reducer';
+import { users } from './user.reducer';
 
-const crazyApp = combineReducers({
-  header
+const rootReducer = combineReducers({
+  authentication,
+  alert,
+  users
 })
 
-export default crazyApp
+export default rootReducer

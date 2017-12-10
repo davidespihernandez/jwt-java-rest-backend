@@ -1,10 +1,10 @@
 import React from 'react'
 import { Form, Input, TextArea, Message } from 'semantic-ui-react'
 import SecuredComponent from './SecuredComponent'
-import history from '../history'
-import * as Api from '../Api'
+import { connect } from 'react-redux'
+import { userActions } from '../actions'
 
-export default class UserNew extends SecuredComponent {
+class UserNew extends SecuredComponent {
   constructor(props) {
     super(props);
     this.state = { name: '', email: '', mobile: '', fullAddress: '', error: null }
@@ -16,21 +16,12 @@ export default class UserNew extends SecuredComponent {
 
   submitForm() {
     let user = { name: this.state.name, email: this.state.email, userInfo: { mobile: this.state.mobile, fullAddress: this.state.fullAddress} };
-    this.setState({ error: null });
-     Api.post("/users", user)
-       .then(res => {
-           history.push('/users')
-         }
-       )
-       .catch(err => {
-          this.setState({ error: err.response.data.error });
-       })
+    this.props.dispatch(userActions.createOrUpdate(user));
   }
 
   render() {
     const { name, email, mobile, fullAddress } = this.state
     
-    console.log(this.state.error)
     return (
       <div>
         <h2>Nuevo usuario</h2>
@@ -42,11 +33,11 @@ export default class UserNew extends SecuredComponent {
           <Form.Button>Crear</Form.Button>
         </Form>
         {
-          this.state.error !== null &&
+          this.props.error &&
           <Message
             error
             header='Error saving user'
-            content={this.state.error}
+            content={this.props.error}
           />
         }
       </div>
@@ -54,3 +45,12 @@ export default class UserNew extends SecuredComponent {
   }
 }
 
+function mapStateToProps(state) {
+  const { error } = state.alert;
+  return {
+      error
+  };
+}
+
+const connectedUserNewPage = connect(mapStateToProps)(UserNew);
+export { connectedUserNewPage as UserNew }; 

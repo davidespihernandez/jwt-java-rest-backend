@@ -1,36 +1,21 @@
 import React from 'react'
 import { Menu, Button } from 'semantic-ui-react'
-import history from '../history'
-import * as Security from '../Security'
 import { connect } from 'react-redux'
-import * as Actions from '../actions'
-import { bindActionCreators } from 'redux';
+import { userActions } from '../actions'
+import history from '../history';
 
 function mapStateToProps(state, props) {
-  // armamos un objeto solo con los
-  // datos del store que nos interesan
-  // y lo devolvemos
+  let userName = '';
+  if (state.authentication.user) {
+    userName = state.authentication.user.name;
+  }
   return { 
-    logged: state.header.logged,
-    userName: state.header.userName
+    logged: state.authentication.loggedIn,
+    userName: userName
   };
 }
 
-function mapDispatchToProps(dispatch, props) {
-  // creamos un objeto con un método para crear
-  // y despachar acciones fácilmente y en
-  // una sola línea
-  const actions = {
-    logout: bindActionCreators(Actions.logout, dispatch),
-  };
-
-  return { actions };
-}
-
-
-// The Header creates links that can be used to navigate between routes.
 class Header extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = { activeItem: "" }
@@ -42,9 +27,7 @@ class Header extends React.Component {
   }
   
   doLogout = (e) => {
-    Security.logout();
-    this.props.actions.logout();
-    history.push('/');
+    this.props.dispatch(userActions.logout());
   }
 
   render(props) {
@@ -90,6 +73,5 @@ class Header extends React.Component {
 }
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Header);

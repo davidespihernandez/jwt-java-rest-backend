@@ -1,62 +1,37 @@
 import React from 'react'
-import axios from 'axios'
 import { Header, Segment, Grid, Form, Input, Message } from 'semantic-ui-react'
-import history from '../history'
-import * as Security from '../Security'
-import * as Api from '../Api'
 import { connect } from 'react-redux'
-import * as Actions from '../actions'
-import { bindActionCreators } from 'redux';
-
-function mapStateToProps(state, props) {
-  // armamos un objeto solo con los
-  // datos del store que nos interesan
-  // y lo devolvemos
-  return { };
-}
-
-function mapDispatchToProps(dispatch, props) {
-  // creamos un objeto con un método para crear
-  // y despachar acciones fácilmente y en
-  // una sola línea
-  const actions = {
-    login: bindActionCreators(Actions.login, dispatch),
-  };
-  
-  // devolvemos nuestras funciones dispatch
-  // y los props normales del componente
-  return { actions };
-}
+import { userActions } from '../actions';
+import { userService } from '../services'
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', email: '', mobile: '', fullAddress: '', error: null }
+    // reset login status
+    userService.logout();
+    this.state = { 
+      username: '', 
+      password: '', 
+      submitted: false 
+    }
   }
 
   handleChange = (e, { name, value }) => {
     this.setState({ [name]: value });
   }
 
-  submitForm() {
+  submitForm(e) {
+    e.preventDefault();
     let credentials = { username: this.state.username, password: this.state.password};
-    this.setState({ error: null });
-     axios
-       .post(Api.BASE_URLS().api + "/auth", credentials)
-       .then(res => {
-            console.log('Login');
-            Security.login(res.data.token);
-            this.props.actions.login(Security.currentUserName());
-            history.push('/');
-        }
-      )
-      .catch(err => {
-        this.setState({ error: err.response.data.message });
-      })
+    this.setState({ submitted: true });
+    const { dispatch } = this.props;
+    if (credentials.username && credentials.password) {
+      dispatch(userActions.login(credentials));
+    }
   }
 
   render() {
-    const { username, password } = this.state
+    const { username, password, submitted } = this.state
     return (
       <Grid container centered columns={1} verticalAlign='middle' padded>
         <Grid.Column width={6}>
@@ -71,11 +46,11 @@ class Login extends React.Component {
             </Form>
           </Segment>
           {
-            this.state.error !== null &&
+            this.props.error && submitted &&
             <Message
               error
               header='Error in login'
-              content={this.state.error}
+              content={this.props.error}
             />
           }
         </Grid.Column>
@@ -84,7 +59,14 @@ class Login extends React.Component {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login);
+function mapStateToProps(state) {
+  const { loggingIn } = state.authentication;
+  const { error } = state.alert;
+  return {
+      loggingIn,
+      error
+  };
+}
+
+const connectedLoginPage = connect(mapStateToProps)(Login);
+export { connectedLoginPage as Login }; 

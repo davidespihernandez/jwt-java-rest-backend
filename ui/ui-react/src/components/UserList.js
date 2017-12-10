@@ -2,12 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { List, Button } from 'semantic-ui-react'
 import SecuredComponent from './SecuredComponent'
-import history from '../history'
-import * as Api from '../Api'
+import { userActions } from '../actions'
+import history from '../history';
+import { connect } from 'react-redux'
 
-// The Users page iterates over all of the players and creates
-// a link to their user page.
-export default class UserList extends SecuredComponent {
+class UserList extends SecuredComponent {
 
   constructor(props) {
     super(props);
@@ -15,9 +14,7 @@ export default class UserList extends SecuredComponent {
   }
 
   componentDidMount() {
-    Api.get('/users')
-      .then(res => this.setState({ users: res.data }))
-      .catch(err => console.log(err))
+    this.props.dispatch(userActions.search());
   }
 
   render() {
@@ -26,7 +23,7 @@ export default class UserList extends SecuredComponent {
         <h2>Lista de usuarios</h2>
         <List divided verticalAlign='middle'>
           {
-            this.state.users.map(u => (
+            this.props.users.map(u => (
               <List.Item key={u.id}>
                 <List.Content floated='right'>
                   <Button content='Editar' icon='edit' onClick={() => history.push(`/users/${u.id}/edit`)} />
@@ -47,3 +44,18 @@ export default class UserList extends SecuredComponent {
   }
 }
 
+function mapStateToProps(state) {
+  const error = state.alert.error;
+  const users = state.users.items || [];
+  console.log("mapStateToProps");
+  console.log(error);
+  console.log(users);
+  console.log(state);
+  return {
+      error,
+      users
+  };
+}
+
+const connectedUserListPage = connect(mapStateToProps)(UserList);
+export { connectedUserListPage as UserList }; 

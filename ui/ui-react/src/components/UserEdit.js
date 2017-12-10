@@ -2,16 +2,19 @@ import React from 'react'
 import { Form, Input, TextArea, Message } from 'semantic-ui-react'
 import SecuredComponent from './SecuredComponent'
 import history from '../history'
-import * as Api from '../Api'
+import { userService } from '../services'
+import { alertActions, userActions } from '../actions'
+import { connect } from 'react-redux'
 
-export default class UserEdit extends SecuredComponent {
+class UserEdit extends SecuredComponent {
   constructor(props) {
     super(props);
     this.state = { id: null, name: '', email: '', mobile: '', fullAddress: '', error: null }
   }
 
   componentDidMount() {
-    Api.get(`/users/${this.props.match.params.id}`)
+    this.props.dispatch(alertActions.clear());
+    userService.getById(this.props.match.params.id)
       .then(res => {
         this.setState({ ...res.data,  error: false });
         this.setState({ mobile: res.data.userInfo.mobile, fullAddress: res.data.userInfo.fullAddress })
@@ -35,16 +38,7 @@ export default class UserEdit extends SecuredComponent {
       userInfo: { mobile: this.state.mobile, fullAddress: this.state.fullAddress} 
     };
 
-    this.setState({ error: null });
-
-    Api.post("/users", user)
-       .then(res => {
-           history.push('/users')
-         }
-       )
-       .catch(err => {
-          this.setState({ error: err.response.data.message });
-       })
+    this.props.dispatch(userActions.createOrUpdate(user));
   }
 
   render() {
@@ -60,11 +54,11 @@ export default class UserEdit extends SecuredComponent {
           <Form.Button>Actualizar</Form.Button>
         </Form>
         {
-          this.state.error !== null &&
+          this.props.error &&
           <Message
             error
             header='Error saving user'
-            content={this.state.error}
+            content={this.props.error}
           />
         }
       </div>
@@ -72,3 +66,12 @@ export default class UserEdit extends SecuredComponent {
   }
 }
 
+function mapStateToProps(state) {
+  const { error } = state.alert;
+  return {
+      error
+  };
+}
+
+const connectedUserEditPage = connect(mapStateToProps)(UserEdit);
+export { connectedUserEditPage as UserEdit }; 

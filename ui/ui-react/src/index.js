@@ -7,10 +7,13 @@ import { Router } from 'react-router-dom'
 import registerServiceWorker from './registerServiceWorker';
 import history from './history'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import crazyApp from './reducers'
+import thunkMiddleware from 'redux-thunk';
 
-let store = createStore(crazyApp)
+let store = createStore(crazyApp,
+    applyMiddleware(thunkMiddleware)
+    );
 
 ReactDOM.render((
     <Provider store={store}>

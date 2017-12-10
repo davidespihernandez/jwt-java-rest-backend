@@ -1,9 +1,9 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import UserList from './UserList'
+import { UserList } from './UserList'
 import User from './User'
-import UserNew from './UserNew'
-import UserEdit from './UserEdit'
+import { UserNew } from './UserNew'
+import { UserEdit } from './UserEdit'
 import Page404 from './Page404'
 
 // The Users component matches one of two different routes

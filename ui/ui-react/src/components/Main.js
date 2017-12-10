@@ -2,7 +2,7 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Home from './Home'
 import Users from './Users'
-import Login from './Login'
+import { Login } from './Login'
 import Page404 from './Page404'
 
 const Main = () => (
